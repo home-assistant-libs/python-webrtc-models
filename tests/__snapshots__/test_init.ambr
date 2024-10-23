@@ -1,0 +1,131 @@
+# serializer version: 1
+# name: test_decoding_and_encoding[RTCConfiguration-RTCConfiguration_empty.json][dataclass]
+  dict({
+    'ice_servers': list([
+    ]),
+  })
+# ---
+# name: test_decoding_and_encoding[RTCConfiguration-RTCConfiguration_empty.json][dict]
+  dict({
+  })
+# ---
+# name: test_decoding_and_encoding[RTCConfiguration-RTCConfiguration_multiple_iceServers.json][dataclass]
+  dict({
+    'ice_servers': list([
+      dict({
+        'credential': None,
+        'urls': 'stun:stun.home-assisant.io:80',
+        'username': None,
+      }),
+      dict({
+        'credential': 'credential',
+        'urls': list([
+          'stun:stun.home-assisant.io:80',
+          'stun:stun.l.google.com:19302',
+        ]),
+        'username': 'username',
+      }),
+    ]),
+  })
+# ---
+# name: test_decoding_and_encoding[RTCConfiguration-RTCConfiguration_multiple_iceServers.json][dict]
+  dict({
+    'iceServers': list([
+      dict({
+        'urls': 'stun:stun.home-assisant.io:80',
+      }),
+      dict({
+        'credential': 'credential',
+        'urls': list([
+          'stun:stun.home-assisant.io:80',
+          'stun:stun.l.google.com:19302',
+        ]),
+        'username': 'username',
+      }),
+    ]),
+  })
+# ---
+# name: test_decoding_and_encoding[RTCConfiguration-RTCConfiguration_one_iceServer.json][dataclass]
+  dict({
+    'ice_servers': list([
+      dict({
+        'credential': None,
+        'urls': 'stun:stun.home-assisant.io:80',
+        'username': None,
+      }),
+    ]),
+  })
+# ---
+# name: test_decoding_and_encoding[RTCConfiguration-RTCConfiguration_one_iceServer.json][dict]
+  dict({
+    'iceServers': list([
+      dict({
+        'urls': 'stun:stun.home-assisant.io:80',
+      }),
+    ]),
+  })
+# ---
+# name: test_decoding_and_encoding[RTCIceServer-RTCIceServer_only_urls_list.json][dataclass]
+  dict({
+    'credential': None,
+    'urls': list([
+      'stun:stun.home-assisant.io:80',
+      'stun:stun.l.google.com:19302',
+    ]),
+    'username': None,
+  })
+# ---
+# name: test_decoding_and_encoding[RTCIceServer-RTCIceServer_only_urls_list.json][dict]
+  dict({
+    'urls': list([
+      'stun:stun.home-assisant.io:80',
+      'stun:stun.l.google.com:19302',
+    ]),
+  })
+# ---
+# name: test_decoding_and_encoding[RTCIceServer-RTCIceServer_only_urls_string.json][dataclass]
+  dict({
+    'credential': None,
+    'urls': 'stun:stun.home-assisant.io:80',
+    'username': None,
+  })
+# ---
+# name: test_decoding_and_encoding[RTCIceServer-RTCIceServer_only_urls_string.json][dict]
+  dict({
+    'urls': 'stun:stun.home-assisant.io:80',
+  })
+# ---
+# name: test_decoding_and_encoding[RTCIceServer-RTCIceServer_urls_list.json][dataclass]
+  dict({
+    'credential': 'credential',
+    'urls': list([
+      'stun:stun.home-assisant.io:80',
+      'stun:stun.l.google.com:19302',
+    ]),
+    'username': 'username',
+  })
+# ---
+# name: test_decoding_and_encoding[RTCIceServer-RTCIceServer_urls_list.json][dict]
+  dict({
+    'credential': 'credential',
+    'urls': list([
+      'stun:stun.home-assisant.io:80',
+      'stun:stun.l.google.com:19302',
+    ]),
+    'username': 'username',
+  })
+# ---
+# name: test_decoding_and_encoding[RTCIceServer-RTCIceServer_urls_string.json][dataclass]
+  dict({
+    'credential': 'credential',
+    'urls': 'stun:stun.home-assisant.io:80',
+    'username': 'username',
+  })
+# ---
+# name: test_decoding_and_encoding[RTCIceServer-RTCIceServer_urls_string.json][dict]
+  dict({
+    'credential': 'credential',
+    'urls': 'stun:stun.home-assisant.io:80',
+    'username': 'username',
+  })
+# ---

@@ -1,0 +1,86 @@
+---
+name: CI
+
+# yamllint disable-line rule:truthy
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  pre-commit:
+    name: pre-commit
+    runs-on: ubuntu-latest
+    env:
+      PRE_COMMIT_HOME: /tmp/pre-commit-cache
+    steps:
+      - name: ⤵️ Check out code from GitHub
+        uses: actions/checkout@v4.2.0
+      - name: 🏗 Set up uv
+        uses: astral-sh/setup-uv@v3
+        with:
+          enable-cache: true
+      - name: 🏗 Set pre-commit cache
+        uses: actions/cache@v4
+        with:
+          path: ${{ env.PRE_COMMIT_HOME }}
+          key: ${{ runner.os }}-${{ hashFiles('.pre-commit-config.yaml','.python-version') }}
+      - name: 🚀 Run pre-commit
+        env:
+          # Skipping branch check and pytest as pytest is run in a separate job
+          SKIP: no-commit-to-branch,pytest
+        run: uv run --frozen pre-commit run -a
+
+  pytest:
+    name: pytest
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python: ["3.12"]
+    steps:
+      - name: ⤵️ Check out code from GitHub
+        uses: actions/checkout@v4.2.0
+      - name: 🏗 Set up uv
+        uses: astral-sh/setup-uv@v3
+        with:
+          enable-cache: true
+      - name: 🏗 Set up Python ${{ matrix.python }}
+        run: uv python install ${{ matrix.python }}
+      - name: 🏗 Install dependencies
+        run: uv sync --frozen --dev
+      - name: 🚀 Run pytest
+        run: uv run pytest --cov webrtc_models tests
+      - name: ⬆️ Upload coverage artifact
+        uses: actions/upload-artifact@v4.4.0
+        with:
+          include-hidden-files: true
+          name: coverage-${{ matrix.python }}
+          path: .coverage
+
+  coverage:
+    runs-on: ubuntu-latest
+    needs: pytest
+    steps:
+      - name: ⤵️ Check out code from GitHub
+        uses: actions/checkout@v4.2.0
+        with:
+          fetch-depth: 0
+      - name: ⬇️ Download coverage data
+        uses: actions/download-artifact@v4.1.8
+      - name: 🏗 Set up uv
+        uses: astral-sh/setup-uv@v3
+        with:
+          enable-cache: true
+      - name: 🏗 Install dependencies
+        run: uv sync --frozen --dev
+      - name: 🚀 Process coverage results
+        run: |
+          uv run --frozen coverage combine coverage*/.coverage*
+          uv run --frozen coverage xml -i
+      - name: ⬆️ Upload coverage report
+        uses: codecov/codecov-action@v4.5.0
+        with:
+          fail_ci_if_error: true
+          token: ${{ secrets.CODECOV_TOKEN }}

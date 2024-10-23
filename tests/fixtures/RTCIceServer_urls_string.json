@@ -1,0 +1,5 @@
+{
+  "urls": "stun:stun.home-assisant.io:80",
+  "username": "username",
+  "credential": "credential"
+}

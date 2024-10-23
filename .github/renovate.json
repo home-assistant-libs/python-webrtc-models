@@ -1,0 +1,32 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "commitMessagePrefix": "⬆️",
+  "configMigration": true,
+  "dependencyDashboard": true,
+  "labels": ["dependencies", "no-stale"],
+  "lockFileMaintenance": {
+    "enabled": true
+  },
+  "packageRules": [
+    {
+      "addLabels": ["python"],
+      "matchManagers": ["pep621"]
+    },
+    {
+      "matchDepTypes": ["dev"],
+      "matchManagers": ["pep621"],
+      "rangeStrategy": "pin"
+    },
+    {
+      "addLabels": ["github_actions"],
+      "matchManagers": ["github-actions"],
+      "rangeStrategy": "pin"
+    },
+    {
+      "matchManagers": ["github-actions"],
+      "matchUpdateTypes": ["minor", "patch"],
+      "automerge": true
+    }
+  ],
+  "rebaseWhen": "behind-base-branch"
+}

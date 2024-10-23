@@ -1,0 +1,7 @@
+{
+  "iceServers": [
+    {
+      "urls": "stun:stun.home-assisant.io:80"
+    }
+  ]
+}
