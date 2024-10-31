@@ -2,13 +2,13 @@
 
 from __future__ import annotations
 
-import re
 from typing import TYPE_CHECKING
 
+import orjson
 import pytest
 
 from tests import load_fixture
-from webrtc_models import RTCConfiguration, RTCIceServer
+from webrtc_models import RTCConfiguration, RTCIceCandidate, RTCIceServer
 
 if TYPE_CHECKING:
     from mashumaro.mixins.orjson import DataClassORJSONMixin
@@ -27,6 +27,9 @@ if TYPE_CHECKING:
         (RTCConfiguration, "RTCConfiguration_empty.json"),
         (RTCConfiguration, "RTCConfiguration_one_iceServer.json"),
         (RTCConfiguration, "RTCConfiguration_multiple_iceServers.json"),
+        # RTCIceCandidate
+        (RTCIceCandidate, "RTCIceCandidate_end.json"),
+        (RTCIceCandidate, "RTCIceCandidate_candidate.json"),
     ],
 )
 def test_decoding_and_encoding(
@@ -35,14 +38,16 @@ def test_decoding_and_encoding(
     filename: str,
 ) -> None:
     """Test decoding/encoding."""
-    # Json section
     file_content = load_fixture(filename)
-    ice_server = clazz.from_json(file_content)
-    assert ice_server == snapshot(name="dataclass")
-    # replace spaces and newlines
-    assert ice_server.to_json() == re.sub(r"\s", "", file_content)
+    instance = clazz.from_json(file_content)
+    assert instance == snapshot(name="dataclass")
 
-    # Dict section
-    ice_server_dict = ice_server.to_dict()
-    assert ice_server_dict == snapshot(name="dict")
-    assert ice_server == clazz.from_dict(ice_server_dict)
+    file_content_dict = orjson.loads(file_content)
+    instance_dict = instance.to_dict()
+
+    # Verify json
+    assert instance.to_json() == orjson.dumps(file_content_dict).decode()
+
+    # Verify dict
+    assert instance_dict == file_content_dict
+    assert instance == clazz.from_dict(instance_dict)

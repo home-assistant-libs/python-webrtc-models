@@ -98,6 +98,9 @@ warn_unused_ignores = true
     "T201",  # print found
 ]
 
+[tool.pylint]
+extension-pkg-whitelist = ["orjson"]
+
 [tool.pylint.BASIC]
 good-names = [
   "_",

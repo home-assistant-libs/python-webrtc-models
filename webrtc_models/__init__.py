@@ -6,6 +6,12 @@ from mashumaro import field_options
 from mashumaro.config import BaseConfig
 from mashumaro.mixins.orjson import DataClassORJSONMixin
 
+__all__ = [
+    "RTCConfiguration",
+    "RTCIceCandidate",
+    "RTCIceServer",
+]
+
 
 class _RTCBaseModel(DataClassORJSONMixin):
     """Base class for RTC models."""
@@ -40,3 +46,13 @@ class RTCConfiguration(_RTCBaseModel):
     ice_servers: list[RTCIceServer] = field(
         metadata=field_options(alias="iceServers"), default_factory=list
     )
+
+
+@dataclass(frozen=True)
+class RTCIceCandidate(_RTCBaseModel):
+    """RTC Ice Candidate.
+
+    See https://www.w3.org/TR/webrtc/#rtcicecandidate-interface
+    """
+
+    candidate: str
