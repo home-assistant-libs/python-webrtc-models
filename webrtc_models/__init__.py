@@ -56,3 +56,4 @@ class RTCIceCandidate(_RTCBaseModel):
     """
 
     candidate: str
+    sdp_m_line_index: int

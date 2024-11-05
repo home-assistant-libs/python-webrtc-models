@@ -383,7 +383,7 @@ wheels = [
 
 [[package]]
 name = "webrtc-models"
-version = "0.0.0"
+version = "0.3.0"
 source = { editable = "." }
 dependencies = [
     { name = "mashumaro" },

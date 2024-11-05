@@ -21,7 +21,7 @@ dependencies = [
     "mashumaro~=3.13",
     "orjson>=3.10.7",
 ]
-version = "0.0.0"
+version = "0.3.0"
 
 [project.urls]
 "Homepage"    = "https://pypi.org/project/webrtc-models"
