@@ -1,4 +1,4 @@
 {
   "candidate": "3932168448 1 udp 1694498815 1.2.3.4 10676 typ srflx raddr 0.0.0.0 rport 37566",
-  "sdp_m_line_index": 0
+  "sdpMLineIndex": 0
 }

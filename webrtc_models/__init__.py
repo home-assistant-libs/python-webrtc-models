@@ -56,4 +56,4 @@ class RTCIceCandidate(_RTCBaseModel):
     """
 
     candidate: str
-    sdp_m_line_index: int
+    sdp_m_line_index: int = field(metadata=field_options(alias="sdpMLineIndex"))
