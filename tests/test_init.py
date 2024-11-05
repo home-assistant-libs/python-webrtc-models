@@ -51,3 +51,10 @@ def test_decoding_and_encoding(
     # Verify dict
     assert instance_dict == file_content_dict
     assert instance == clazz.from_dict(instance_dict)
+
+
+def test_no_m_id() -> None:
+    """Test decoding/encoding."""
+    file_content = load_fixture("RTCIceCandidate_invalid.json")
+    with pytest.raises(TypeError):
+        RTCIceCandidate.from_json(file_content)

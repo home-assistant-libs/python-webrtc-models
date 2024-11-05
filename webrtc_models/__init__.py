@@ -56,4 +56,19 @@ class RTCIceCandidate(_RTCBaseModel):
     """
 
     candidate: str
-    sdp_m_line_index: int = field(metadata=field_options(alias="sdpMLineIndex"))
+    sdp_m_line_index: int | None = field(
+        metadata=field_options(alias="sdpMLineIndex"), default=None, kw_only=True
+    )
+    sdp_mid: str | None = field(
+        metadata=field_options(alias="sdpMid"), default=None, kw_only=True
+    )
+
+    def __post_init__(self) -> None:
+        """Validate spec compliance.
+
+        1. If both the sdpMid and sdpMLineIndex members of candidateInitDict are null,
+        throw a TypeError.
+        """
+        if self.sdp_m_line_index is None and self.sdp_mid is None:
+            msg = "sdp_m_line_index and sdp_mid cannot both be null."
+            raise TypeError(msg)
