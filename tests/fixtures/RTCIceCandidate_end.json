@@ -1,4 +1,6 @@
 {
   "candidate": "",
-  "sdpMLineIndex": 0
+  "sdpMLineIndex": null,
+  "sdpMid": null,
+  "userFragment": null
 }

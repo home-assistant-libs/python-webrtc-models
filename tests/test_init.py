@@ -44,6 +44,7 @@ def test_decoding_and_encoding(
 
     file_content_dict = orjson.loads(file_content)
     instance_dict = instance.to_dict()
+    assert instance_dict == snapshot(name="dict")
 
     # Verify json
     assert instance.to_json() == orjson.dumps(file_content_dict).decode()
@@ -53,8 +54,16 @@ def test_decoding_and_encoding(
     assert instance == clazz.from_dict(instance_dict)
 
 
-def test_no_m_id() -> None:
-    """Test decoding/encoding."""
+def test_no_mid_and_mlineindex() -> None:
+    """Test spd_mid and sdp_multilineindex raises TypeError."""
     file_content = load_fixture("RTCIceCandidate_invalid.json")
     with pytest.raises(TypeError):
         RTCIceCandidate.from_json(file_content)
+
+
+def test_empty_candidate_creation() -> None:
+    """Test empty candidate creation."""
+    file_content = load_fixture("RTCIceCandidate_end.json")
+    file_content_dict = orjson.loads(file_content)
+    rtc_ice_end = RTCIceCandidate()
+    assert rtc_ice_end.to_dict() == file_content_dict
