@@ -1,7 +1,8 @@
 """WebRTC models."""
 
 from dataclasses import dataclass, field
-from typing import Any
+from typing import TYPE_CHECKING, Any
+from warnings import warn
 
 from mashumaro import field_options
 from mashumaro.config import BaseConfig
@@ -82,11 +83,12 @@ class RTCIceCandidate(_RTCBaseModel):
         omit_default = False
         serialize_by_alias = True
 
-    rtc_ice_candidate_init: RTCIceCandidateInit | None = field(
+    candidate_init: RTCIceCandidateInit | str | None = field(
         default=None, metadata=field_options(serialize="omit")
     )
 
-    candidate: str = field(init=False)
+    candidate: str | None = None
+
     sdp_m_line_index: int | None = field(
         metadata=field_options(alias="sdpMLineIndex"), default=None, init=False
     )
@@ -160,7 +162,7 @@ class RTCIceCandidate(_RTCBaseModel):
         This method reverses that logic.
         """
         candidate_init = RTCIceCandidateInit.from_dict(d)
-        return {"rtc_ice_candidate_init": candidate_init.to_dict()}
+        return {"candidate_init": candidate_init.to_dict()}
 
     def __post_init__(self) -> None:
         """Initialize the class.
@@ -168,7 +170,24 @@ class RTCIceCandidate(_RTCBaseModel):
         Spec compliance: If both the sdpMid and sdpMLineIndex members of
         candidateInitDict are null, throw a TypeError.
         """
-        ric_init = self.rtc_ice_candidate_init
+        if (candidate := self.candidate) or (
+            isinstance(self.candidate_init, str) and (candidate := self.candidate_init)
+        ):
+            msg = (
+                "Passing a candidate str to RTCIceCandidate is deprecated, "
+                "pass an RTCIceCandidateInit object"
+            )
+            warn(msg, DeprecationWarning, stacklevel=2)
+            object.__setattr__(
+                self,
+                "candidate_init",
+                RTCIceCandidateInit(candidate, sdp_mid="0"),
+            )
+
+        if TYPE_CHECKING:
+            assert isinstance(self.candidate_init, RTCIceCandidateInit)
+
+        ric_init = self.candidate_init
         if (
             ric_init
             and ric_init.candidate != ""

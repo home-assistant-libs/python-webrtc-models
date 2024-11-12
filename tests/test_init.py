@@ -67,3 +67,16 @@ def test_empty_candidate_creation() -> None:
     file_content_dict = orjson.loads(file_content)
     rtc_ice_end = RTCIceCandidate()
     assert rtc_ice_end.to_dict() == file_content_dict
+
+
+def test_candidate_creation_from_string() -> None:
+    """Test empty candidate creation."""
+    with pytest.deprecated_call():
+        rtc_cand = RTCIceCandidate("candidate")
+    assert rtc_cand.candidate == "candidate"
+    assert rtc_cand.sdp_mid == "0"
+
+    with pytest.deprecated_call():
+        rtc_cand = RTCIceCandidate(candidate="candidate")
+    assert rtc_cand.candidate == "candidate"
+    assert rtc_cand.sdp_mid == "0"

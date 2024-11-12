@@ -69,6 +69,12 @@
   dict({
     'address': None,
     'candidate': '3932168448 1 udp 1694498815 1.2.3.4 10676 typ srflx raddr 0.0.0.0 rport 37566',
+    'candidate_init': dict({
+      'candidate': '3932168448 1 udp 1694498815 1.2.3.4 10676 typ srflx raddr 0.0.0.0 rport 37566',
+      'sdp_m_line_index': 0,
+      'sdp_mid': None,
+      'user_fragment': None,
+    }),
     'component': None,
     'foundation': None,
     'port': None,
@@ -77,12 +83,6 @@
     'related_address': None,
     'related_port': None,
     'relay_protocol': None,
-    'rtc_ice_candidate_init': dict({
-      'candidate': '3932168448 1 udp 1694498815 1.2.3.4 10676 typ srflx raddr 0.0.0.0 rport 37566',
-      'sdp_m_line_index': 0,
-      'sdp_mid': None,
-      'user_fragment': None,
-    }),
     'sdp_m_line_index': 0,
     'sdp_mid': None,
     'tcp_type': None,
@@ -103,6 +103,12 @@
   dict({
     'address': None,
     'candidate': '',
+    'candidate_init': dict({
+      'candidate': '',
+      'sdp_m_line_index': None,
+      'sdp_mid': None,
+      'user_fragment': None,
+    }),
     'component': None,
     'foundation': None,
     'port': None,
@@ -111,12 +117,6 @@
     'related_address': None,
     'related_port': None,
     'relay_protocol': None,
-    'rtc_ice_candidate_init': dict({
-      'candidate': '',
-      'sdp_m_line_index': None,
-      'sdp_mid': None,
-      'user_fragment': None,
-    }),
     'sdp_m_line_index': None,
     'sdp_mid': None,
     'tcp_type': None,
