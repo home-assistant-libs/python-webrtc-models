@@ -5,10 +5,6 @@
     ]),
   })
 # ---
-# name: test_decoding_and_encoding[RTCConfiguration-RTCConfiguration_empty.json][dict]
-  dict({
-  })
-# ---
 # name: test_decoding_and_encoding[RTCConfiguration-RTCConfiguration_multiple_iceServers.json][dataclass]
   dict({
     'ice_servers': list([
@@ -16,23 +12,6 @@
         'credential': None,
         'urls': 'stun:stun.home-assisant.io:80',
         'username': None,
-      }),
-      dict({
-        'credential': 'credential',
-        'urls': list([
-          'stun:stun.home-assisant.io:80',
-          'stun:stun.l.google.com:19302',
-        ]),
-        'username': 'username',
-      }),
-    ]),
-  })
-# ---
-# name: test_decoding_and_encoding[RTCConfiguration-RTCConfiguration_multiple_iceServers.json][dict]
-  dict({
-    'iceServers': list([
-      dict({
-        'urls': 'stun:stun.home-assisant.io:80',
       }),
       dict({
         'credential': 'credential',
@@ -56,81 +35,20 @@
     ]),
   })
 # ---
-# name: test_decoding_and_encoding[RTCConfiguration-RTCConfiguration_one_iceServer.json][dict]
+# name: test_decoding_and_encoding[RTCIceCandidateInit-RTCIceCandidateInit_candidate.json][dataclass]
   dict({
-    'iceServers': list([
-      dict({
-        'urls': 'stun:stun.home-assisant.io:80',
-      }),
-    ]),
-  })
-# ---
-# name: test_decoding_and_encoding[RTCIceCandidate-RTCIceCandidate_candidate.json][dataclass]
-  dict({
-    'address': None,
     'candidate': '3932168448 1 udp 1694498815 1.2.3.4 10676 typ srflx raddr 0.0.0.0 rport 37566',
-    'candidate_init': dict({
-      'candidate': '3932168448 1 udp 1694498815 1.2.3.4 10676 typ srflx raddr 0.0.0.0 rport 37566',
-      'sdp_m_line_index': 0,
-      'sdp_mid': None,
-      'user_fragment': None,
-    }),
-    'component': None,
-    'foundation': None,
-    'port': None,
-    'priority': None,
-    'protocol': None,
-    'related_address': None,
-    'related_port': None,
-    'relay_protocol': None,
     'sdp_m_line_index': 0,
     'sdp_mid': None,
-    'tcp_type': None,
-    'type': None,
-    'url': None,
     'user_fragment': None,
   })
 # ---
-# name: test_decoding_and_encoding[RTCIceCandidate-RTCIceCandidate_candidate.json][dict]
+# name: test_decoding_and_encoding[RTCIceCandidateInit-RTCIceCandidateInit_end.json][dataclass]
   dict({
-    'candidate': '3932168448 1 udp 1694498815 1.2.3.4 10676 typ srflx raddr 0.0.0.0 rport 37566',
-    'sdpMLineIndex': 0,
-    'sdpMid': None,
-    'userFragment': None,
-  })
-# ---
-# name: test_decoding_and_encoding[RTCIceCandidate-RTCIceCandidate_end.json][dataclass]
-  dict({
-    'address': None,
     'candidate': '',
-    'candidate_init': dict({
-      'candidate': '',
-      'sdp_m_line_index': None,
-      'sdp_mid': None,
-      'user_fragment': None,
-    }),
-    'component': None,
-    'foundation': None,
-    'port': None,
-    'priority': None,
-    'protocol': None,
-    'related_address': None,
-    'related_port': None,
-    'relay_protocol': None,
     'sdp_m_line_index': None,
     'sdp_mid': None,
-    'tcp_type': None,
-    'type': None,
-    'url': None,
     'user_fragment': None,
-  })
-# ---
-# name: test_decoding_and_encoding[RTCIceCandidate-RTCIceCandidate_end.json][dict]
-  dict({
-    'candidate': '',
-    'sdpMLineIndex': None,
-    'sdpMid': None,
-    'userFragment': None,
   })
 # ---
 # name: test_decoding_and_encoding[RTCIceServer-RTCIceServer_only_urls_list.json][dataclass]
@@ -143,14 +61,6 @@
     'username': None,
   })
 # ---
-# name: test_decoding_and_encoding[RTCIceServer-RTCIceServer_only_urls_list.json][dict]
-  dict({
-    'urls': list([
-      'stun:stun.home-assisant.io:80',
-      'stun:stun.l.google.com:19302',
-    ]),
-  })
-# ---
 # name: test_decoding_and_encoding[RTCIceServer-RTCIceServer_only_urls_string.json][dataclass]
   dict({
     'credential': None,
@@ -158,22 +68,7 @@
     'username': None,
   })
 # ---
-# name: test_decoding_and_encoding[RTCIceServer-RTCIceServer_only_urls_string.json][dict]
-  dict({
-    'urls': 'stun:stun.home-assisant.io:80',
-  })
-# ---
 # name: test_decoding_and_encoding[RTCIceServer-RTCIceServer_urls_list.json][dataclass]
-  dict({
-    'credential': 'credential',
-    'urls': list([
-      'stun:stun.home-assisant.io:80',
-      'stun:stun.l.google.com:19302',
-    ]),
-    'username': 'username',
-  })
-# ---
-# name: test_decoding_and_encoding[RTCIceServer-RTCIceServer_urls_list.json][dict]
   dict({
     'credential': 'credential',
     'urls': list([
@@ -190,10 +85,13 @@
     'username': 'username',
   })
 # ---
-# name: test_decoding_and_encoding[RTCIceServer-RTCIceServer_urls_string.json][dict]
+# name: test_decoding_and_encoding_deprecated[RTCIceCandidate-RTCIceCandidate_candidate.json][dataclass]
   dict({
-    'credential': 'credential',
-    'urls': 'stun:stun.home-assisant.io:80',
-    'username': 'username',
+    'candidate': '3932168448 1 udp 1694498815 1.2.3.4 10676 typ srflx raddr 0.0.0.0 rport 37566',
+  })
+# ---
+# name: test_decoding_and_encoding_deprecated[RTCIceCandidate-RTCIceCandidate_end.json][dataclass]
+  dict({
+    'candidate': '',
   })
 # ---

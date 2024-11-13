@@ -1,7 +1,6 @@
 """WebRTC models."""
 
 from dataclasses import dataclass, field
-from typing import TYPE_CHECKING, Any
 from warnings import warn
 
 from mashumaro import field_options
@@ -61,9 +60,9 @@ class RTCIceCandidate(_RTCBaseModel):
 
     def __post_init__(self) -> None:
         """Initialize class."""
-        msg = ("Using RTCIceCandidate is deprecated. Use "
-               "RTCIceCandidateInit instead")
+        msg = "Using RTCIceCandidate is deprecated. Use RTCIceCandidateInit instead"
         warn(msg, DeprecationWarning, stacklevel=2)
+
 
 @dataclass(frozen=True)
 class RTCIceCandidateInit(RTCIceCandidate):
@@ -89,7 +88,10 @@ class RTCIceCandidateInit(RTCIceCandidate):
         Spec compliance: If both the sdpMid and sdpMLineIndex members of
         candidateInitDict are null, throw a TypeError.
         """
-
-        if self.sdp_mid is None and self.sdp_m_line_index is None:
-            raise TypeError("sdpMid or sdpMLineIndex must be set")
-
+        if (
+            self.candidate != ""
+            and self.sdp_mid is None
+            and self.sdp_m_line_index is None
+        ):
+            msg = "sdpMid or sdpMLineIndex must be set"
+            raise TypeError(msg)

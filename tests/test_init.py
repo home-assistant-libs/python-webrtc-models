@@ -8,7 +8,12 @@ import orjson
 import pytest
 
 from tests import load_fixture
-from webrtc_models import RTCConfiguration, RTCIceCandidate, RTCIceServer
+from webrtc_models import (
+    RTCConfiguration,
+    RTCIceCandidate,
+    RTCIceCandidateInit,
+    RTCIceServer,
+)
 
 if TYPE_CHECKING:
     from mashumaro.mixins.orjson import DataClassORJSONMixin
@@ -27,9 +32,9 @@ if TYPE_CHECKING:
         (RTCConfiguration, "RTCConfiguration_empty.json"),
         (RTCConfiguration, "RTCConfiguration_one_iceServer.json"),
         (RTCConfiguration, "RTCConfiguration_multiple_iceServers.json"),
-        # RTCIceCandidate
-        (RTCIceCandidate, "RTCIceCandidate_end.json"),
-        (RTCIceCandidate, "RTCIceCandidate_candidate.json"),
+        # RTCIceCandidateInit
+        (RTCIceCandidateInit, "RTCIceCandidateInit_end.json"),
+        (RTCIceCandidateInit, "RTCIceCandidateInit_candidate.json"),
     ],
 )
 def test_decoding_and_encoding(
@@ -44,7 +49,6 @@ def test_decoding_and_encoding(
 
     file_content_dict = orjson.loads(file_content)
     instance_dict = instance.to_dict()
-    assert instance_dict == snapshot(name="dict")
 
     # Verify json
     assert instance.to_json() == orjson.dumps(file_content_dict).decode()
@@ -54,29 +58,39 @@ def test_decoding_and_encoding(
     assert instance == clazz.from_dict(instance_dict)
 
 
+@pytest.mark.parametrize(
+    ("clazz", "filename"),
+    [
+        # RTCIceCandidate
+        (RTCIceCandidate, "RTCIceCandidate_end.json"),
+        (RTCIceCandidate, "RTCIceCandidate_candidate.json"),
+    ],
+)
+def test_decoding_and_encoding_deprecated(
+    snapshot: SnapshotAssertion,
+    clazz: type[DataClassORJSONMixin],
+    filename: str,
+) -> None:
+    """Test decoding/encoding."""
+    file_content = load_fixture(filename)
+    with pytest.deprecated_call():
+        instance = clazz.from_json(file_content)
+    assert instance == snapshot(name="dataclass")
+
+    file_content_dict = orjson.loads(file_content)
+    instance_dict = instance.to_dict()
+
+    # Verify json
+    assert instance.to_json() == orjson.dumps(file_content_dict).decode()
+
+    # Verify dict
+    assert instance_dict == file_content_dict
+    with pytest.deprecated_call():
+        assert instance == clazz.from_dict(instance_dict)
+
+
 def test_no_mid_and_mlineindex() -> None:
     """Test spd_mid and sdp_multilineindex raises TypeError."""
-    file_content = load_fixture("RTCIceCandidate_invalid.json")
+    file_content = load_fixture("RTCIceCandidateInit_invalid.json")
     with pytest.raises(TypeError):
-        RTCIceCandidate.from_json(file_content)
-
-
-def test_empty_candidate_creation() -> None:
-    """Test empty candidate creation."""
-    file_content = load_fixture("RTCIceCandidate_end.json")
-    file_content_dict = orjson.loads(file_content)
-    rtc_ice_end = RTCIceCandidate()
-    assert rtc_ice_end.to_dict() == file_content_dict
-
-
-def test_candidate_creation_from_string() -> None:
-    """Test empty candidate creation."""
-    with pytest.deprecated_call():
-        rtc_cand = RTCIceCandidate("candidate")
-    assert rtc_cand.candidate == "candidate"
-    assert rtc_cand.sdp_mid == "0"
-
-    with pytest.deprecated_call():
-        rtc_cand = RTCIceCandidate(candidate="candidate")
-    assert rtc_cand.candidate == "candidate"
-    assert rtc_cand.sdp_mid == "0"
+        RTCIceCandidateInit.from_json(file_content)
