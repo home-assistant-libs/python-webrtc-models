@@ -86,6 +86,8 @@ class RTCIceCandidateInit(RTCIceCandidate):
     def __post_init__(self) -> None:
         """Initialize class."""
         if not self.candidate:
+            # An empty string represents an end-of-candidates indication
+            # or a peer reflexive remote candidate
             return
 
         if self.sdp_mid is None and self.sdp_m_line_index is None:
