@@ -68,7 +68,8 @@ class RTCIceCandidate(_RTCBaseModel):
 class RTCIceCandidateInit(RTCIceCandidate):
     """RTC Ice Candidate Init.
 
-    If neither sdp_mid nor sdp_m_line_index are provided, sdp_m_line_index is set to 0.
+    If neither sdp_mid nor sdp_m_line_index are provided and candidate is not an empty
+    string, sdp_m_line_index is set to 0.
     See https://www.w3.org/TR/webrtc/#dom-rtcicecandidateinit
     """
 
