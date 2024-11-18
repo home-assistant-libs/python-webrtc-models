@@ -91,6 +91,15 @@ def test_decoding_and_encoding_deprecated(
 
 def test_no_mid_and_mlineindex() -> None:
     """Test spd_mid and sdp_multilineindex raises TypeError."""
+    file_content = load_fixture("RTCIceCandidate_candidate.json")
+    cand = RTCIceCandidateInit.from_json(file_content)
+    assert cand.sdp_m_line_index == 0
+    assert cand.sdp_mid is None
+
+
+def test_invalid_mlineindex() -> None:
+    """Test spd_mid and sdp_multilineindex raises TypeError."""
     file_content = load_fixture("RTCIceCandidateInit_invalid.json")
-    with pytest.raises(TypeError):
+    msg = "sdpMLineIndex must be greater than or equal to 0"
+    with pytest.raises(ValueError, match=msg):
         RTCIceCandidateInit.from_json(file_content)

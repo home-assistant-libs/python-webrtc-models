@@ -68,6 +68,7 @@ class RTCIceCandidate(_RTCBaseModel):
 class RTCIceCandidateInit(RTCIceCandidate):
     """RTC Ice Candidate Init.
 
+    If neither sdp_mid nor sdp_m_line_index are provided, sdp_m_line_index is set to 0.
     See https://www.w3.org/TR/webrtc/#dom-rtcicecandidateinit
     """
 
@@ -83,15 +84,12 @@ class RTCIceCandidateInit(RTCIceCandidate):
     )
 
     def __post_init__(self) -> None:
-        """Initialize class.
+        """Initialize class."""
+        if not self.candidate:
+            return
 
-        Spec compliance: If both the sdpMid and sdpMLineIndex members of
-        candidateInitDict are null, throw a TypeError.
-        """
-        if (
-            self.candidate != ""
-            and self.sdp_mid is None
-            and self.sdp_m_line_index is None
-        ):
-            msg = "sdpMid or sdpMLineIndex must be set"
-            raise TypeError(msg)
+        if self.sdp_mid is None and self.sdp_m_line_index is None:
+            object.__setattr__(self, "sdp_m_line_index", 0)
+        elif (sdp := self.sdp_m_line_index) is not None and sdp < 0:
+            msg = "sdpMLineIndex must be greater than or equal to 0"
+            raise ValueError(msg)
