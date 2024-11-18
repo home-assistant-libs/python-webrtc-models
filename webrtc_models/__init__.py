@@ -1,6 +1,7 @@
 """WebRTC models."""
 
 from dataclasses import dataclass, field
+from warnings import warn
 
 from mashumaro import field_options
 from mashumaro.config import BaseConfig
@@ -56,3 +57,42 @@ class RTCIceCandidate(_RTCBaseModel):
     """
 
     candidate: str
+
+    def __post_init__(self) -> None:
+        """Initialize class."""
+        msg = "Using RTCIceCandidate is deprecated. Use RTCIceCandidateInit instead"
+        warn(msg, DeprecationWarning, stacklevel=2)
+
+
+@dataclass(frozen=True)
+class RTCIceCandidateInit(RTCIceCandidate):
+    """RTC Ice Candidate Init.
+
+    If neither sdp_mid nor sdp_m_line_index are provided and candidate is not an empty
+    string, sdp_m_line_index is set to 0.
+    See https://www.w3.org/TR/webrtc/#dom-rtcicecandidateinit
+    """
+
+    candidate: str
+    sdp_mid: str | None = field(
+        metadata=field_options(alias="sdpMid"), default=None, kw_only=True
+    )
+    sdp_m_line_index: int | None = field(
+        metadata=field_options(alias="sdpMLineIndex"), default=None, kw_only=True
+    )
+    user_fragment: str | None = field(
+        metadata=field_options(alias="userFragment"), default=None, kw_only=True
+    )
+
+    def __post_init__(self) -> None:
+        """Initialize class."""
+        if not self.candidate:
+            # An empty string represents an end-of-candidates indication
+            # or a peer reflexive remote candidate
+            return
+
+        if self.sdp_mid is None and self.sdp_m_line_index is None:
+            object.__setattr__(self, "sdp_m_line_index", 0)
+        elif (sdp := self.sdp_m_line_index) is not None and sdp < 0:
+            msg = "sdpMLineIndex must be greater than or equal to 0"
+            raise ValueError(msg)

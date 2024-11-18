@@ -35,14 +35,20 @@
     ]),
   })
 # ---
-# name: test_decoding_and_encoding[RTCIceCandidate-RTCIceCandidate_candidate.json][dataclass]
+# name: test_decoding_and_encoding[RTCIceCandidateInit-RTCIceCandidateInit_candidate.json][dataclass]
   dict({
     'candidate': '3932168448 1 udp 1694498815 1.2.3.4 10676 typ srflx raddr 0.0.0.0 rport 37566',
+    'sdp_m_line_index': 0,
+    'sdp_mid': None,
+    'user_fragment': None,
   })
 # ---
-# name: test_decoding_and_encoding[RTCIceCandidate-RTCIceCandidate_end.json][dataclass]
+# name: test_decoding_and_encoding[RTCIceCandidateInit-RTCIceCandidateInit_end.json][dataclass]
   dict({
     'candidate': '',
+    'sdp_m_line_index': None,
+    'sdp_mid': None,
+    'user_fragment': None,
   })
 # ---
 # name: test_decoding_and_encoding[RTCIceServer-RTCIceServer_only_urls_list.json][dataclass]
@@ -77,5 +83,15 @@
     'credential': 'credential',
     'urls': 'stun:stun.home-assisant.io:80',
     'username': 'username',
+  })
+# ---
+# name: test_decoding_and_encoding_deprecated[RTCIceCandidate-RTCIceCandidate_candidate.json][dataclass]
+  dict({
+    'candidate': '3932168448 1 udp 1694498815 1.2.3.4 10676 typ srflx raddr 0.0.0.0 rport 37566',
+  })
+# ---
+# name: test_decoding_and_encoding_deprecated[RTCIceCandidate-RTCIceCandidate_end.json][dataclass]
+  dict({
+    'candidate': '',
   })
 # ---
